@@ -1,0 +1,24 @@
+version: '3.1'
+
+services:
+  web:
+    image: php:5.3-apache
+    ports:
+      - "8000:80"
+    volumes:
+      - .:/var/www/html
+  db:
+    image: docker.io/mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: users
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+    ports:
+      - "3306:3306"  # Expose the MySQL port
+    volumes:
+      - dbdata:/var/lib/mysql
+      - ./users.sql:/docker-entrypoint-initdb.d/users.sql
+volumes:
+  dbdata:
+
